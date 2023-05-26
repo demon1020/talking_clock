@@ -105,6 +105,7 @@ class _TalkingClockScreenState extends State<TalkingClockScreen> {
     changeLanguage(selectedLocale);
   }
 
+  @pragma('vm:entry-point')
   void startClockIsolate() async {
     final receivePort = ReceivePort();
     clockIsolate =
@@ -119,6 +120,7 @@ class _TalkingClockScreenState extends State<TalkingClockScreen> {
     });
   }
 
+  @pragma('vm:entry-point')
   static void runClockIsolate(SendPort sendPort) {
     Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       final currentTime = DateFormat.jm().format(dateTime);
