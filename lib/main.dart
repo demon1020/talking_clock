@@ -100,6 +100,8 @@ class _TalkingClockScreenState extends State<TalkingClockScreen> {
     await flutterTts.setLanguage(selectedLocale.languageCode);
     await flutterTts.setPitch(pitch);
     await flutterTts.setSpeechRate(speechRate);
+    await flutterTts.awaitSpeakCompletion(true);
+    await flutterTts.awaitSynthCompletion(true);
     changeLanguage(selectedLocale);
   }
 
@@ -112,6 +114,7 @@ class _TalkingClockScreenState extends State<TalkingClockScreen> {
         currentTime = message as String;
         isInitialised = RxBool(true);
       });
+      //Enable to tell automatic in specified period
       // speakTime(currentTime);
     });
   }
@@ -149,7 +152,8 @@ class _TalkingClockScreenState extends State<TalkingClockScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('title'.tr),
-      ),endDrawer: Drawer(
+      ),
+      endDrawer: Drawer(
         child: SafeArea(
           child: ListView(
             children: [
@@ -186,7 +190,10 @@ class _TalkingClockScreenState extends State<TalkingClockScreen> {
                 child: Text('Prabhavati'),
               ),
             ),
-            GestureDetector(
+            InkWell(
+              splashColor: Colors.orangeAccent,
+              highlightColor: Colors.orangeAccent,
+              borderRadius: BorderRadius.circular(100),
               onTap: listenToTime,
               child: Container(
                 height: 100,
@@ -197,7 +204,13 @@ class _TalkingClockScreenState extends State<TalkingClockScreen> {
                   color: currentTime.isEmpty ? Colors.orangeAccent : Colors.blue,
                   borderRadius: BorderRadius.circular(100),
                 ),
-                child: Text('listen'.tr,style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w500),),
+                child: Text(
+                  'listen'.tr,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500),
+                ),
               ),
             ),
           ],
